@@ -20,6 +20,7 @@ CLASS DataPelanggan
 
 CLASS BengkelMotor
     pelangganList = new ArrayList()
+    scanner = new Scanner
 
     PROCEDURE main()
         PRINT "PROGRAM BENGKEL MOTOR"

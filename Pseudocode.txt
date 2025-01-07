@@ -24,8 +24,6 @@ CLASS BengkelMotor
 
     PROCEDURE main()
         PRINT "PROGRAM BENGKEL MOTOR"
-        PRINT "Nama : Aditya Okta Ramadhan"
-        PRINT "NIM  : 123456789"
         
         WHILE true
             CALL showMenu()

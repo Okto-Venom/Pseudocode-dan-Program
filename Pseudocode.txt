@@ -1,0 +1,154 @@
+PROGRAM BengkelMotor
+START
+
+VARIABEL
+    dataList : List
+    isRunning : Boolean
+    pilihanMenu, jenis, jenisTambahan : Integer
+    nama, nomorTelepon, tanggalPelayanan, jenisMotor, jenisLayanan, tambahanLayanan : String
+    biaya, biayaTambahan, total : Integer
+
+FUNGSI showMenu():
+    START
+    TAMPILKAN "======================================="
+    TAMPILKAN "|          BENGKEL YOGA MOTOR         |"
+    TAMPILKAN "|             *** BATANG ***          |"
+    TAMPILKAN "======================================="
+    TAMPILKAN "|              MENU UTAMA             |"
+    TAMPILKAN "|-------------------------------------|"
+    TAMPILKAN "| 1. Isi Data Pelanggan               |"
+    TAMPILKAN "| 2. Lihat Laporan Perbaikan          |"
+    TAMPILKAN "| 3. Edit Data Pelanggan              |"
+    TAMPILKAN "| 4. Hapus Data                       |"
+    TAMPILKAN "| 5. Keluar                           |"
+    TAMPILKAN "======================================="
+    TAMPILKAN "Pilih Menu : "
+    pilihanMenu ← INPUT
+
+    JIKA pilihanMenu = 1:
+        PANGGIL isiData()
+    JIKA pilihanMenu = 2:
+        PANGGIL lihatLaporan()
+    JIKA pilihanMenu = 3:
+        PANGGIL editData()
+    JIKA pilihanMenu = 4:
+        PANGGIL hapusData()
+    JIKA pilihanMenu = 5:
+        TAMPILKAN "Terima kasih telah menggunakan program."
+        isRunning ← FALSE
+    LAINNYA:
+        TAMPILKAN "Pilihan tidak valid. Silakan coba lagi."
+    END
+
+FUNGSI isiData():
+    START
+    isAdding ← TRUE
+    SELAMA isAdding:
+        TAMPILKAN "--- Isi Data Pelanggan ---"
+        TAMPILKAN "Masukkan Nama Pelanggan                : "
+        nama ← INPUT
+        TAMPILKAN "Masukkan Nomor Telepon                 : "
+        nomorTelepon ← INPUT
+        TAMPILKAN "Masukkan Tanggal Pelayanan (DD-MM-YYYY): "
+        tanggalPelayanan ← INPUT
+        TAMPILKAN "Masukkan Jenis Motor                   : "
+        jenisMotor ← INPUT
+
+        TAMPILKAN "|     Pilihan Jenis Layanan     |"
+        TAMPILKAN "| [1] Service Motor (Rp 100.000)|"
+        TAMPILKAN "| [2] Ganti Oli     (Rp 60.000 )|"
+        TAMPILKAN "| [3] Tambal Ban    (Rp 25.000 )|"
+        TAMPILKAN "| [4] Tune-Up       (Rp 200.000)|"
+        TAMPILKAN "Pilih : "
+        jenis ← INPUT
+        JIKA jenis = 1:
+            jenisLayanan ← "Service Motor"
+            biaya ← 100000
+        JIKA jenis = 2:
+            jenisLayanan ← "Ganti Oli"
+            biaya ← 60000
+        JIKA jenis = 3:
+            jenisLayanan ← "Tambal Ban"
+            biaya ← 25000
+        JIKA jenis = 4:
+            jenisLayanan ← "Tune-Up"
+            biaya ← 200000
+        LAINNYA:
+            TAMPILKAN "Pilihan tidak valid."
+            KEMBALI
+
+        TAMPILKAN "|        Pilihan Layanan Tambahan       |"
+        TAMPILKAN "| [1] Ganti Van Belt               (Rp 190.000)|"
+        TAMPILKAN "| [2] Ganti Ban Depan dan Belakang (Rp 483.000)|"
+        TAMPILKAN "| [3] Ganti Aki Motor              (Rp 185.000)|"
+        TAMPILKAN "| [4] Ganti Kampas Rem             (Rp 100.000)|"
+        TAMPILKAN "| [5] Tidak Ada                    |"
+        TAMPILKAN "Pilih : "
+        jenisTambahan ← INPUT
+        JIKA jenisTambahan = 1:
+            tambahanLayanan ← "Ganti Van Belt"
+            biayaTambahan ← 190000
+        JIKA jenisTambahan = 2:
+            tambahanLayanan ← "Ganti Ban Depan dan Belakang"
+            biayaTambahan ← 483000
+        JIKA jenisTambahan = 3:
+            tambahanLayanan ← "Ganti Aki"
+            biayaTambahan ← 185000
+        JIKA jenisTambahan = 4:
+            tambahanLayanan ← "Ganti Kampas Rem"
+            biayaTambahan ← 100000
+        JIKA jenisTambahan = 5:
+            tambahanLayanan ← "Tidak Ada"
+            biayaTambahan ← 0
+        LAINNYA:
+            TAMPILKAN "Pilihan tidak valid."
+            KEMBALI
+
+        total ← biaya + biayaTambahan
+        MASUKKAN data KE dataList
+
+        TAMPILKAN "Apakah ingin isi data lagi? [Y/T]: "
+        JIKA INPUT = "T":
+            isAdding ← FALSE
+    END
+
+FUNGSI lihatLaporan():
+    START
+    JIKA dataList kosong:
+        TAMPILKAN "Belum ada data."
+    LAINNYA:
+        TAMPILKAN "Laporan Data Pelanggan"
+        UNTUK setiap data DALAM dataList:
+            TAMPILKAN data.namaPelanggan, data.jenisLayanan, data.tambahanLayanan, total
+    END
+
+FUNGSI editData():
+    START
+    TAMPILKAN "Masukkan nomor data yang ingin diubah : "
+    index ← INPUT
+    JIKA index valid:
+        PANGGIL isiData()
+        UPDATE dataList[index] DENGAN data baru
+    LAINNYA:
+        TAMPILKAN "Data tidak ditemukan."
+    END
+
+FUNGSI hapusData():
+    START
+    TAMPILKAN "Masukkan nomor data yang ingin dihapus : "
+    index ← INPUT
+    JIKA index valid:
+        HAPUS dataList[index]
+        TAMPILKAN "Data berhasil dihapus."
+    LAINNYA:
+        TAMPILKAN "Data tidak ditemukan."
+    END
+
+PROGRAM UTAMA:
+    START
+    isRunning ← TRUE
+    SELAMA isRunning:
+        PANGGIL showMenu()
+    END
+
+END
